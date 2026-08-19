@@ -1,0 +1,62 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import HeroComposition from '../components/HeroComposition.astro';
+import EyebrowRotator from '../components/EyebrowRotator.astro';
+import PartnerMarquee from '../components/PartnerMarquee.astro';
+import WhyHigala from '../components/WhyHigala.astro';
+import SolutionsPanels from '../components/SolutionsPanels.astro';
+import BenefitMarquee from '../components/BenefitMarquee.astro';
+import ProofStats from '../components/ProofStats.astro';
+import CtaPanel from '../components/CtaPanel.astro';
+import ArrowRight from '../components/icons/ArrowRight.astro';
+import { url } from '../lib/paths';
+---
+
+<Layout
+	title="Higala — Payments and Digital Banking Infrastructure"
+	description="Higala delivers payments and digital banking infrastructure for rural banks and cooperatives — designed to work individually or together."
+>
+	<Hero>
+		<Fragment slot="eyebrow"><EyebrowRotator words={['Banks', 'Cooperatives', 'Microfinance Institutions']} /></Fragment>
+		<Fragment slot="heading">Modernize without the multi-million peso CapEx trap.</Fragment>
+		<Fragment slot="lede">
+			Higala delivers payments and digital banking infrastructure for rural banks and
+			cooperatives — designed to work individually or together.
+		</Fragment>
+		<Fragment slot="cta">
+			<a class="btn btn-white" href={url('/#demo')}>Book a Demo</a>
+			<a class="tlink" href={url('/#solutions')}>
+				Explore our solutions
+				<ArrowRight />
+			</a>
+		</Fragment>
+		<HeroComposition slot="visual" />
+		<Fragment slot="trust">
+			<span>Built on Mojaloop and ISO 20022</span>
+			<span>InstaPay access through RCBC as sponsor bank</span>
+			<span>Co-founded by Talino Venture Studios and Chemonics International</span>
+		</Fragment>
+	</Hero>
+
+	<PartnerMarquee
+		lead="Higala works with the leading financial innovators in the Philippines and around the world"
+		partners={['RCBC', 'Mojaloop Foundation', 'Talino Venture Studios', 'Chemonics International']}
+	/>
+
+	<WhyHigala />
+
+	<SolutionsPanels />
+
+	<BenefitMarquee />
+
+	<ProofStats />
+
+	<CtaPanel
+		id="demo"
+		heading="See it run on your own numbers."
+		body="Bring one loan product and one week of collections. In 30 minutes we'll show you exactly where the manual work goes and what settles in real time instead. No commitment, no CapEx, no core migration."
+		primaryHref="#"
+		secondaryHref="#"
+	/>
+</Layout>

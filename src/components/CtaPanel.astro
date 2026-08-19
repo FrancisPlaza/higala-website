@@ -1,0 +1,38 @@
+---
+import ArrowRight from './icons/ArrowRight.astro';
+
+interface Props {
+	id?: string;
+	heading: string;
+	body: string;
+	primaryLabel?: string;
+	primaryHref?: string;
+	secondaryLabel?: string;
+	secondaryHref?: string;
+}
+const {
+	id,
+	heading,
+	body,
+	primaryLabel = 'Book a Demo',
+	primaryHref = '#',
+	secondaryLabel = 'Or send us a DM',
+	secondaryHref = '#',
+} = Astro.props;
+---
+
+<section id={id}>
+	<div class="wrap">
+		<div class="ctapanel">
+			<h2>{heading}</h2>
+			<p>{body}</p>
+			<div class="cta-row" style="margin-top:36px">
+				<a class="btn btn-white" href={primaryHref}>{primaryLabel}</a>
+				<a class="tlink" style="color:#fff" href={secondaryHref}>
+					{secondaryLabel}
+					<ArrowRight />
+				</a>
+			</div>
+		</div>
+	</div>
+</section>

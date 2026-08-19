@@ -1,0 +1,56 @@
+---
+interface Props {
+	lead: string;
+	partners: string[];
+}
+const { lead, partners } = Astro.props;
+const track = [...partners, ...partners];
+---
+
+<div class="marq">
+	<div class="wrap">
+		<p class="marq-lead">{lead}</p>
+	</div>
+	<div class="marq-t" aria-hidden="true">
+		{track.map((p) => <span>{p}</span>)}
+	</div>
+</div>
+
+<style>
+	.marq {
+		overflow: hidden;
+		padding: 40px 0 44px;
+		background: #fff;
+		border-bottom: 1px solid var(--line);
+	}
+	.marq-lead {
+		font: 600 12px/1.5 var(--font-body);
+		color: var(--higala-teal);
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		max-width: 76ch;
+		margin: 0 auto 28px;
+		text-align: center;
+		text-wrap: balance;
+	}
+	.marq-t {
+		display: flex;
+		gap: 64px;
+		width: max-content;
+		animation: sl 34s linear infinite;
+	}
+	.marq-t span {
+		font: 600 17px var(--font-display);
+		color: var(--ink-400);
+		white-space: nowrap;
+		filter: grayscale(1);
+		letter-spacing: -0.01em;
+	}
+
+	@media (max-width: 760px) {
+		.marq-lead {
+			font-size: 11px;
+			letter-spacing: 0.1em;
+		}
+	}
+</style>

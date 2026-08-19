@@ -1,0 +1,22 @@
+/* Higala Design System tokens — ported verbatim from reference/prototype.html */
+:root{
+--higala-teal:#00A8A0;--higala-teal-700:#00847E;--higala-teal-800:#00615D;
+--higala-teal-300:#5CCBC5;--higala-teal-100:#C2ECE9;--higala-teal-050:#E6F6F5;
+--higala-green:#00DE69;--higala-green-700:#00B054;--higala-green-100:#CCF8E1;
+--ink:#122424;--ink-800:#1D3535;--ink-600:#3D5555;--ink-500:#5C7272;--ink-400:#8A9A9A;
+--line:#E0E0E0;--line-soft:#EFEFEF;--surface-0:#FFFFFF;--surface-1:#F7F9F9;--surface-2:#EFF3F3;
+--grad-brand:linear-gradient(102deg,#00A8A0 0%,#00DE69 100%);
+--grad-brand-deep:linear-gradient(160deg,#00615D 0%,#00A8A0 60%,#00DE69 140%);
+--grad-ink:linear-gradient(180deg,rgba(18,36,36,0) 0%,rgba(18,36,36,.82) 62%,rgba(18,36,36,.94) 100%);
+--grad-wash:linear-gradient(180deg,#E6F6F5 0%,#FFFFFF 100%);
+--font-display:"Poppins",system-ui,sans-serif;
+--font-body:"Hanken Grotesk",system-ui,-apple-system,sans-serif;
+--font-mono:"JetBrains Mono",ui-monospace,monospace;
+--fs-display-1:64px;--fs-display-2:48px;--fs-h1:38px;--fs-h2:30px;--fs-h3:24px;--fs-h4:20px;
+--radius-sm:8px;--radius-card:16px;--radius-media:24px;--radius-hero:32px;--radius-pill:999px;
+--shadow-xs:0 1px 2px rgba(18,36,36,.06);--shadow-sm:0 2px 8px rgba(18,36,36,.06);
+--shadow-md:0 8px 24px rgba(18,36,36,.08);--shadow-lg:0 20px 48px rgba(18,36,36,.12);
+--shadow-brand:0 12px 28px rgba(0,168,160,.28);--ring-focus:0 0 0 3px rgba(0,222,105,.45);
+--ease:cubic-bezier(.2,0,0,1);--dur-fast:140ms;--dur-base:220ms;--dur-slow:400ms;
+--page-max:1200px;--gutter:24px;--section-y:96px;
+}

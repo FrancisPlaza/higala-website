@@ -1,0 +1,54 @@
+---
+interface Benefit {
+	verb: string;
+	clause: string;
+}
+const benefits: Benefit[] = [
+	{ verb: 'Modernize Payment Systems', clause: 'to support innovative financial services' },
+	{ verb: 'Lower On-Ramp Barrier Costs', clause: 'to expand financial inclusion' },
+	{ verb: 'Build Resiliency in the Financial System', clause: 'through a parallel infrastructure' },
+	{ verb: 'Reach More Customers', clause: 'with connected payment and digital service integration' },
+	{ verb: 'Lower Transaction Costs', clause: 'for real-time payments and settlements' },
+];
+const track = [...benefits, ...benefits];
+---
+
+<div class="bmarq" aria-hidden="true">
+	<div class="bmarq-t">
+		{
+			track.map((b) => (
+				<i>
+					<b>{b.verb}</b> {b.clause}
+				</i>
+			))
+		}
+	</div>
+</div>
+
+<style>
+	.bmarq {
+		overflow: hidden;
+		background: var(--higala-teal-050);
+		border-top: 1px solid var(--higala-teal-100);
+		border-bottom: 1px solid var(--higala-teal-100);
+		padding: 26px 0;
+	}
+	.bmarq-t {
+		display: flex;
+		gap: 56px;
+		width: max-content;
+		animation: sl 46s linear infinite;
+	}
+	.bmarq-t i {
+		font-style: normal;
+		white-space: nowrap;
+		font-size: 16px;
+		color: var(--ink-600);
+	}
+	.bmarq-t i b {
+		font-family: var(--font-display);
+		font-weight: 600;
+		color: var(--ink);
+		margin-right: 8px;
+	}
+</style>

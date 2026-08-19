@@ -1,0 +1,23 @@
+---
+import { base, url } from '../lib/paths';
+
+const { pathname } = Astro.url;
+const path = pathname.startsWith(base) ? pathname.slice(base.length) || '/' : pathname;
+const isHome = path === '/';
+const isDigitalLending = path === '/digital-lending' || path === '/digital-lending/';
+---
+
+<header>
+	<div class="hd">
+		<a href={url('/')}><img src={url('/logo.png')} alt="Higala" /></a>
+		<nav>
+			<a href={url('/#solutions')} class:list={{ act: isHome }}>Our Solutions</a>
+			<a href={url('/digital-lending')} class:list={{ act: isDigitalLending }}>Digital Lending</a>
+			<a href={url('/#why')}>Why Higala</a>
+			<a href={url('/#news')}>News</a>
+		</nav>
+		<div class="right">
+			<a class="btn btn-grad" href={url('/#demo')}>Book a Demo</a>
+		</div>
+	</div>
+</header>

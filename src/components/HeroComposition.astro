@@ -1,0 +1,304 @@
+---
+// Home-hero visual: capability chips (left) + photo stage w/ DBaaS badge (center) + capability cards (right).
+// TODO: swap the `.drop` placeholder for a real <img src="/hero-photo.jpg"> once the photo asset exists.
+const leftChips = [
+	{
+		label: 'API',
+		path: '<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9zM9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/>',
+	},
+	{
+		label: 'InstaPay Rail',
+		path: '<path d="M8 3L4 7l4 4"/><path d="M4 7h16"/><path d="M16 21l4-4-4-4"/><path d="M20 17H4"/>',
+	},
+	{
+		label: 'Ecosystem',
+		path: '<circle cx="12" cy="12" r="3"/><circle cx="5" cy="5" r="2.4"/><circle cx="19" cy="5" r="2.4"/><circle cx="5" cy="19" r="2.4"/><circle cx="19" cy="19" r="2.4"/><path d="M6.8 6.8l2.8 2.8M17.2 6.8l-2.8 2.8M6.8 17.2l2.8-2.8M17.2 17.2l-2.8-2.8"/>',
+	},
+];
+
+const rightCards = [
+	{ label: 'Deposits', path: '<rect x="2" y="6" width="20" height="13" rx="2.5"/><path d="M2 11h20M6 15h4"/>' },
+	{ label: 'Lending', path: '<path d="M3 17l6-6 4 4 8-8"/><path d="M21 7v6h-6"/>' },
+	{
+		label: 'Payments',
+		path: '<path d="M7 4L3 8l4 4"/><path d="M3 8h13"/><path d="M17 20l4-4-4-4"/><path d="M21 16H8"/>',
+	},
+	{
+		label: 'Platform Banking',
+		path: '<path d="M3 21h18M5 21V10M19 21V10M12 3l9 5H3z"/><path d="M9 21v-6h6v6"/>',
+	},
+];
+---
+
+<div class="comp">
+	<div class="comp-col">
+		{
+			leftChips.map((c) => (
+				<div class="chip">
+					<svg viewBox="0 0 24 24" set:html={c.path} />
+					<span>{c.label}</span>
+				</div>
+			))
+		}
+	</div>
+
+	<div class="stage">
+		<div class="dbaas">
+			<svg viewBox="0 0 24 24">
+				<rect x="6" y="2" width="12" height="20" rx="2.5"></rect>
+				<path d="M10 18h4"></path>
+				<path d="M14 8h5a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-5"></path>
+			</svg>
+			<span>Digital Banking<br />as a Service</span>
+		</div>
+		<!-- SWAP: set src to the photo file, then delete the .drop block below.
+		     <img src="/hero-photo.jpg" alt="A bank customer using digital banking on her phone"> -->
+		<div class="drop">
+			<b>Photo drops in here</b>
+			<span>Replace with the woman-on-phone photo. Uncomment the &lt;img&gt; above, point src at the file, delete this block.</span>
+		</div>
+	</div>
+
+	<div class="comp-col">
+		{
+			rightCards.map((c) => (
+				<div class="cap">
+					<svg viewBox="0 0 24 24" set:html={c.path} />
+					<span>{c.label}</span>
+				</div>
+			))
+		}
+	</div>
+</div>
+
+<style>
+	.comp {
+		position: relative;
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr) auto;
+		gap: clamp(10px, 1.6vw, 20px);
+		align-items: center;
+	}
+	.comp-col {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.chip {
+		width: 84px;
+		padding: 14px 6px;
+		border-radius: var(--radius-card);
+		text-align: center;
+		background: rgba(18, 36, 36, 0.34);
+		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24);
+		backdrop-filter: blur(8px);
+	}
+	.chip svg {
+		width: 22px;
+		height: 22px;
+		stroke: #fff;
+		stroke-width: 1.8;
+		fill: none;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		margin: 0 auto 8px;
+		display: block;
+	}
+	.chip span {
+		display: block;
+		font: 600 9.5px var(--font-body);
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: rgba(255, 255, 255, 0.9);
+		line-height: 1.25;
+	}
+
+	.stage {
+		position: relative;
+		border-radius: var(--radius-media);
+		overflow: hidden;
+		background: rgba(255, 255, 255, 0.14);
+		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3), var(--shadow-lg);
+		aspect-ratio: 1/1.12;
+		min-width: 0;
+		display: grid;
+		place-items: center;
+	}
+	.stage img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+	.stage .drop {
+		padding: 26px 22px 26px 58px;
+		text-align: center;
+		position: relative;
+		z-index: 2;
+	}
+	.stage .drop b {
+		display: block;
+		font: 600 14px var(--font-display);
+		color: #fff;
+		margin-bottom: 6px;
+	}
+	.stage .drop span {
+		font: 400 12px var(--font-body);
+		color: rgba(255, 255, 255, 0.78);
+		line-height: 1.5;
+	}
+	.stage:after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: var(--grad-ink);
+		opacity: 0.5;
+		pointer-events: none;
+	}
+
+	.dbaas {
+		position: absolute;
+		left: -30px;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: 3;
+		width: 106px;
+		padding: 16px 10px;
+		border-radius: 22px;
+		text-align: center;
+		background: linear-gradient(150deg, #00615d, #0b3b3a);
+		box-shadow: 0 10px 26px rgba(18, 36, 36, 0.34), inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+	}
+	.dbaas svg {
+		width: 26px;
+		height: 26px;
+		stroke: var(--higala-green);
+		stroke-width: 1.8;
+		fill: none;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		margin: 0 auto 8px;
+		display: block;
+	}
+	.dbaas span {
+		font: 600 10.5px var(--font-body);
+		letter-spacing: 0.04em;
+		color: #fff;
+		line-height: 1.35;
+		display: block;
+	}
+
+	.cap {
+		width: 132px;
+		background: #fff;
+		border-radius: var(--radius-card);
+		padding: 16px 14px;
+		box-shadow: var(--shadow-md);
+		transition: transform var(--dur-base) var(--ease);
+	}
+	.cap:hover {
+		transform: translateY(-2px);
+	}
+	.cap svg {
+		width: 22px;
+		height: 22px;
+		stroke: var(--higala-teal);
+		stroke-width: 1.9;
+		fill: none;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		margin-bottom: 10px;
+		display: block;
+	}
+	.cap span {
+		font: 600 11.5px var(--font-body);
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--ink);
+		line-height: 1.3;
+		display: block;
+	}
+
+	@media (max-width: 1080px) {
+		.comp {
+			max-width: 620px;
+			margin: 0 auto;
+		}
+		.cap {
+			width: 118px;
+		}
+		.chip {
+			width: 76px;
+		}
+		.dbaas {
+			left: -18px;
+			width: 84px;
+		}
+	}
+
+	@media (max-width: 760px) {
+		.comp {
+			display: flex;
+			flex-direction: column;
+			gap: 14px;
+			max-width: none;
+		}
+		.comp-col {
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: 10px;
+			justify-content: center;
+		}
+		.chip,
+		.cap {
+			width: calc(50% - 5px);
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			text-align: left;
+		}
+		.chip svg,
+		.cap svg {
+			margin: 0;
+			flex: 0 0 auto;
+		}
+		.chip {
+			padding: 12px 14px;
+		}
+		.cap {
+			padding: 14px;
+		}
+		.stage {
+			order: -1;
+			width: 100%;
+			aspect-ratio: 4/3.2;
+		}
+		.stage .drop {
+			padding: 66px 18px 22px;
+		}
+		.dbaas {
+			left: auto;
+			right: 14px;
+			top: 14px;
+			transform: none;
+			width: 78px;
+			padding: 11px 6px;
+		}
+		.dbaas svg {
+			width: 20px;
+			height: 20px;
+			margin-bottom: 6px;
+		}
+		.dbaas span {
+			font-size: 9px;
+		}
+	}
+
+	@media (max-width: 420px) {
+		.chip,
+		.cap {
+			width: 100%;
+		}
+	}
+</style>

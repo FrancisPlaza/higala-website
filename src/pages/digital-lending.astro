@@ -1,0 +1,258 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import ComparisonTable from '../components/ComparisonTable.astro';
+import CtaPanel from '../components/CtaPanel.astro';
+
+const outcomes = [
+	{
+		icon: '<rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10 18h4"/><path d="M13 6l-2.5 3.5H13L11 13"/>',
+		title: 'Make repayments effortless',
+		body: 'A customer in a far barangay pays in seconds instead of losing half a day and a fare. Convenience drives on-time payment — the cheapest NPL reduction there is.',
+	},
+	{
+		icon: '<path d="M3 17l6-6 4 4 8-8"/><path d="M21 7v6h-6"/>',
+		title: 'Grow the book without growing headcount',
+		body: 'Faster turnaround captures borrowers who would otherwise go to high-interest lenders, and the small-ticket tier you could never staff becomes volume.',
+	},
+	{
+		icon: '<path d="M4 20V10M10 20V4M16 20v-7M22 20V8"/>',
+		title: 'Decide on real data',
+		body: 'Underwrite on observed repayment behaviour from your own portfolio, not on a form and a hunch.',
+	},
+	{
+		icon: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13A4 4 0 0 1 16 11"/>',
+		title: 'Keep the primary financial relationship',
+		body: "Your customers will use other e-wallets — that's a given. The question is where they borrow and save.",
+	},
+];
+
+const comparisonRows: [string, string][] = [
+	['Collections arrive as a T+1 batch file', 'Payments credit and post in real time'],
+	['Staff match payments to accounts by hand', 'Matching happens on the reference, automatically'],
+	['Exceptions found the next day, or later', 'Exceptions surface at the moment of settlement'],
+	['Collections position is always a day stale', 'Live position for provisioning and reporting'],
+	['Every new account adds reconciliation load', 'Volume scales without added manual work'],
+];
+
+const sequencing = [
+	{
+		tag: 'Collect',
+		soft: true,
+		body: 'Real-time repayments over InstaPay. The fastest win, and the one most institutions start with.',
+	},
+	{
+		tag: 'Originate',
+		soft: false,
+		body: 'Digital loan applications for ₱20,000 and below, decisioned in minutes instead of days. Serve the high-velocity tier you’ve never been able to staff.',
+	},
+	{
+		tag: 'Score',
+		soft: false,
+		body: 'Rules-based underwriting informed by your own data.',
+	},
+];
+---
+
+<Layout
+	title="Digital Lending Platform — Higala"
+	description="A complete lending core for rural banks, cooperatives, and MFIs — origination, underwriting, servicing, and real-time collections over InstaPay."
+>
+	<Hero>
+		<Fragment slot="eyebrow">Digital Lending Platform</Fragment>
+		<Fragment slot="heading" ><span style="max-width:22ch;display:inline-block">Lend digitally end to end, from application to repayment.</span></Fragment>
+		<Fragment slot="lede">
+			A complete lending core for rural banks, cooperatives, and MFIs — origination, underwriting,
+			servicing, and real-time collections over InstaPay. Runs alongside your existing core. No
+			upfront CapEx.
+		</Fragment>
+		<Fragment slot="cta">
+			<a class="btn btn-white" href="#">Book a Demo</a>
+			<a class="tlink" href="#collections">
+				See how collections settle in real time
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M12 5v14M6 13l6 6 6-6"></path>
+				</svg>
+			</a>
+		</Fragment>
+	</Hero>
+
+	<section class="tint" id="dl-outcomes">
+		<div class="wrap">
+			<div class="grid g4 outcomes-grid" style="margin-top:0">
+				{
+					outcomes.map((o) => (
+						<div>
+							<svg class="ic" viewBox="0 0 24 24" set:html={o.icon} />
+							<h4>{o.title}</h4>
+							<p style="font-size:15.5px">{o.body}</p>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<div class="wrap">
+			<div class="ov">Origination</div>
+			<h2>Take loan applications digitally.</h2>
+			<p class="sub">
+				Borrowers apply from a phone. Branch staff work the same queue. Loan officers capture
+				applications on a tablet in the field. Documents, KYC, and credit-committee approvals move
+				through one system with one audit trail.
+			</p>
+			<ul class="f">
+				<li>
+					<b>Digital application flows</b> — no manual paperwork. Capture digital loan applications
+					for high-velocity tiers instantly and give your customers a fast, modern borrowing
+					experience from anywhere.
+				</li>
+				<li><b>Electronic KYC and document capture</b> — photo capture and identity verification</li>
+				<li>
+					<b>Configurable approval workflows</b> — mirror your existing credit committee and
+					delegation limits
+				</li>
+				<li>
+					<b>Full audit trail</b> — every action, every approver, every timestamp, examination-ready
+				</li>
+			</ul>
+		</div>
+	</section>
+
+	<section class="tint">
+		<div class="wrap">
+			<div class="ov">Underwriting and Scoring</div>
+			<h2>Your credit policy, applied consistently.</h2>
+			<p class="sub">
+				You set the rules. Higala applies them the same way on every application. As repayments run
+				through the platform, the scoring layer learns from behaviour you can see and audit — never
+				from a model you can't inspect.
+			</p>
+			<ul class="f">
+				<li>
+					<b>Rules engine you control</b> — thresholds, ratios, exclusions, and overrides configured
+					by your credit team
+				</li>
+				<li>
+					<b>Behavioural repayment signals</b> — on-time and late patterns from your own borrowers
+				</li>
+				<li>
+					<b>Consistent decisions</b> — the same inputs produce the same outcome regardless of who
+					keys them
+				</li>
+				<li>
+					<b>Portfolio and vintage views</b> — see how each cohort performs, per product and per
+					branch
+				</li>
+				<li><b>Board and BSP reporting</b> — pull the numbers instead of assembling them</li>
+			</ul>
+		</div>
+	</section>
+
+	<section>
+		<div class="wrap">
+			<div class="ov">Servicing and Disbursement</div>
+			<h2>Release funds and track them from the same place.</h2>
+			<p class="sub">
+				Approve a loan and disburse it to the borrower's bank account or e-wallet over InstaPay. The
+				disbursement, the schedule, and the ledger entry are one event, not three handoffs.
+			</p>
+			<ul class="f">
+				<li><b>Real-time disbursement</b> to any InstaPay-reachable account or wallet</li>
+				<li><b>Automated amortization schedules</b> per product terms</li>
+				<li>
+					<b>Restructuring and rescheduling</b> handled in-system with the audit trail intact
+				</li>
+				<li><b>Arrears and ageing views</b> updated as payments settle, not overnight</li>
+			</ul>
+		</div>
+	</section>
+
+	<section class="tint" id="collections">
+		<div class="wrap">
+			<div class="ov">Collections</div>
+			<h2>Repayments that reconcile themselves.</h2>
+			<p class="sub">
+				This is where the manual work goes. Higala connects your institution to InstaPay through
+				RCBC as sponsor bank. Borrowers pay from any bank or e-wallet in the country. Funds credit
+				your account in real time, carry a reference your system matches on the first pass, and
+				post against the right loan without anyone opening a spreadsheet.
+			</p>
+			<ComparisonTable rows={comparisonRows} />
+			<ul class="f">
+				<li>
+					<b>Sponsor-bank access to InstaPay</b> — RCBC's connection, certification, and settlement
+					plumbing
+				</li>
+				<li>
+					<b>Pay-in from any Philippine bank or e-wallet</b> — meet borrowers where their money
+					already is. Since BSP Circular 1238 took effect in 2026, most major banks and e-wallets
+					charge nothing for InstaPay transfers, so paying you costs the borrower nothing.
+				</li>
+				<li><b>Automatic posting</b> — every payment posts to the borrower's loan account as it settles</li>
+				<li><b>Real-time settlement visibility</b> — every payment traceable end to end</li>
+			</ul>
+		</div>
+	</section>
+
+	<section>
+		<div class="wrap">
+			<div class="ov">Platform and Integration</div>
+			<h2>Sits alongside your core. Doesn't ask to replace it.</h2>
+			<p class="sub">
+				Higala's Digital Lending Platform is delivered as a service and works with the core banking
+				system you run today. There is no hardware to buy and no licence to capitalize. If you
+				change core banking system in three years, Higala stays.
+			</p>
+			<ul class="f">
+				<li>
+					<b>No CapEx</b> — we earn when you earn, taking only a share of the interest you collect
+				</li>
+				<li>
+					<b>Your institution remains lender of record</b> — RCBC sponsors the rail connection under
+					its own BSP authority
+				</li>
+			</ul>
+		</div>
+	</section>
+
+	<section class="tint">
+		<div class="wrap">
+			<div class="ov">Strategic Sequencing</div>
+			<h2>Start with repayments.</h2>
+			<div class="grid g3">
+				{
+					sequencing.map((s) => (
+						<div class:list={['card', { soft: s.soft }]}>
+							<div class="ptag">{s.tag}</div>
+							<p>{s.body}</p>
+						</div>
+					))
+				}
+			</div>
+			<p class="sub" style="margin-top:32px">
+				Each works on its own. Together they run the loan lifecycle end to end.
+			</p>
+		</div>
+	</section>
+
+	<CtaPanel
+		heading="Bring one week of new loan applications. We'll show you how to make repayments effortless."
+		body="A 30-minute working session on your own loan product and your own repayment data. You'll see exactly what settles in real time, what reconciles itself, and what it would take to go live. No CapEx, no core migration, no commitment."
+		primaryHref="#"
+		secondaryHref="#"
+	/>
+</Layout>
+
+<style>
+	/* Outcome band: reserve two heading lines so every paragraph starts on the same line */
+	.outcomes-grid :global(h4) {
+		min-height: calc(2 * 1.3em);
+	}
+	@media (max-width: 760px) {
+		.outcomes-grid :global(h4) {
+			min-height: 0;
+		}
+	}
+</style>

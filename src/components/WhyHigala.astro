@@ -1,0 +1,50 @@
+---
+const cards = [
+	{
+		icon: '<path d="M8 3L4 7l4 4"/><path d="M4 7h16"/><path d="M16 21l4-4-4-4"/><path d="M20 17H4"/>',
+		title: 'The interoperable rail',
+		body: 'Instead of every small bank trying to build their own expensive, complex road to the national payment network, we provide a shared connection to InstaPay.',
+	},
+	{
+		icon: '<path d="M12 2l9 5v6c0 5-4 8-9 9-5-1-9-4-9-9V7z"/><path d="M9 12l2 2 4-4"/>',
+		title: 'The only BSP-recognized Platform Bank program',
+		body: 'Not a vendor claim about compliance. A program the central bank already recognizes.',
+	},
+	{
+		icon: '<path d="M13 2L3 14h7l-1 8 11-13h-7z"/>',
+		title: 'A faster EPFS licensing path',
+		body: 'Partnering with Higala accelerates your Electronic Payment and Financial Services licensing process.',
+	},
+];
+---
+
+<section class="tint" id="why">
+	<div class="wrap">
+		<div class="ov">Why Higala</div>
+		<h2 style="max-width:30ch">
+			We built the interoperable rail that connects financial institutions directly to InstaPay.
+		</h2>
+		<p class="sub" style="max-width:700px;font-size:19px">
+			Because we operate the sole Platform Bank program recognized by the BSP, partnering with
+			Higala directly accelerates your EPFS licensing path.
+		</p>
+		<div class="grid g3 why-grid">
+			{
+				cards.map((c) => (
+					<div class="card soft">
+						<svg class="ic" viewBox="0 0 24 24" set:html={c.icon} />
+						<h4>{c.title}</h4>
+						<p>{c.body}</p>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	/* two-line heading block so every card body starts on the same line */
+	.why-grid :global(h4) {
+		min-height: calc(2 * 1.3em);
+	}
+</style>

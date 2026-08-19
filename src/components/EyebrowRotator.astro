@@ -1,0 +1,60 @@
+---
+interface Props {
+	words: string[];
+}
+const { words } = Astro.props;
+---
+
+Payments and digital banking infrastructure for
+<span class="rotator" id="rot" aria-live="polite">
+	{words.map((w, i) => <span class:list={['rot-word', { on: i === 0 }]}>{w}</span>)}
+</span>
+<noscript>{words.join(', ')}</noscript>
+
+<style>
+	.rotator {
+		display: inline-grid;
+		vertical-align: bottom;
+	}
+	.rot-word {
+		grid-area: 1/1;
+		opacity: 0;
+		transform: translateY(4px);
+		white-space: nowrap;
+		transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
+		color: #fff;
+	}
+	.rot-word.on {
+		opacity: 1;
+		transform: none;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.rotator {
+			display: inline;
+		}
+		.rot-word {
+			opacity: 1;
+			transform: none;
+			transition: none;
+		}
+		.rot-word:not(:last-child):after {
+			content: ', ';
+		}
+		.rot-word:last-child:before {
+			content: 'and ';
+		}
+	}
+</style>
+
+<script>
+	const words = document.querySelectorAll<HTMLElement>('#rot .rot-word');
+	if (words.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+		let i = 0;
+		setInterval(() => {
+			words[i].classList.remove('on');
+			i = (i + 1) % words.length;
+			words[i].classList.add('on');
+		}, 2500);
+	}
+</script>

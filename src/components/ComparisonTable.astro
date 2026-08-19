@@ -1,0 +1,18 @@
+---
+interface Props {
+	rows: [string, string][];
+}
+const { rows } = Astro.props;
+---
+
+<table>
+	<tr><th>Today</th><th>On Higala</th></tr>
+	{
+		rows.map(([today, onHigala]) => (
+			<tr>
+				<td>{today}</td>
+				<td>{onHigala}</td>
+			</tr>
+		))
+	}
+</table>

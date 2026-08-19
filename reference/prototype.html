@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Higala — Website Preview v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── Higala Design System tokens (from tokens/*.css) ───────────────── */
+:root{
+--higala-teal:#00A8A0;--higala-teal-700:#00847E;--higala-teal-800:#00615D;
+--higala-teal-300:#5CCBC5;--higala-teal-100:#C2ECE9;--higala-teal-050:#E6F6F5;
+--higala-green:#00DE69;--higala-green-700:#00B054;--higala-green-100:#CCF8E1;
+--ink:#122424;--ink-800:#1D3535;--ink-600:#3D5555;--ink-500:#5C7272;--ink-400:#8A9A9A;
+--line:#E0E0E0;--line-soft:#EFEFEF;--surface-0:#FFFFFF;--surface-1:#F7F9F9;--surface-2:#EFF3F3;
+--grad-brand:linear-gradient(102deg,#00A8A0 0%,#00DE69 100%);
+--grad-brand-deep:linear-gradient(160deg,#00615D 0%,#00A8A0 60%,#00DE69 140%);
+--grad-ink:linear-gradient(180deg,rgba(18,36,36,0) 0%,rgba(18,36,36,.82) 62%,rgba(18,36,36,.94) 100%);
+--grad-wash:linear-gradient(180deg,#E6F6F5 0%,#FFFFFF 100%);
+--font-display:"Poppins",system-ui,sans-serif;
+--font-body:"Hanken Grotesk",system-ui,-apple-system,sans-serif;
+--font-mono:"JetBrains Mono",ui-monospace,monospace;
+--fs-display-1:64px;--fs-display-2:48px;--fs-h1:38px;--fs-h2:30px;--fs-h3:24px;--fs-h4:20px;
+--radius-sm:8px;--radius-card:16px;--radius-media:24px;--radius-hero:32px;--radius-pill:999px;
+--shadow-xs:0 1px 2px rgba(18,36,36,.06);--shadow-sm:0 2px 8px rgba(18,36,36,.06);
+--shadow-md:0 8px 24px rgba(18,36,36,.08);--shadow-lg:0 20px 48px rgba(18,36,36,.12);
+--shadow-brand:0 12px 28px rgba(0,168,160,.28);--ring-focus:0 0 0 3px rgba(0,222,105,.45);
+--ease:cubic-bezier(.2,0,0,1);--dur-fast:140ms;--dur-base:220ms;--dur-slow:400ms;
+--page-max:1200px;--gutter:24px;--section-y:96px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{margin:0;font:400 16px/1.6 var(--font-body);color:var(--ink-600);background:var(--surface-0)}
+h1,h2,h3,h4{font-family:var(--font-display);color:var(--ink);margin:0;letter-spacing:-.01em}
+h1{font-size:var(--fs-display-2);line-height:1.08;font-weight:700;letter-spacing:-.02em}
+h2{font-size:clamp(24px,3vw,32px);line-height:1.2;font-weight:600}
+h3{font-size:var(--fs-h3);line-height:1.25;font-weight:600}
+h4{font-size:var(--fs-h4);line-height:1.3;font-weight:600}
+p{margin:0}
+a{color:var(--higala-teal-700);text-decoration:none}
+.wrap{max-width:var(--page-max);margin:0 auto;padding:0 var(--gutter)}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+
+/* overline */
+.ov-hero{font-size:11.5px;letter-spacing:.11em;max-width:none}
+.ov{font-size:12px;line-height:1.2;font-weight:600;text-transform:uppercase;
+  letter-spacing:.14em;color:var(--higala-teal);margin-bottom:20px;font-family:var(--font-body)}
+.on-ink .ov{color:var(--higala-green)}
+
+/* buttons — pill */
+.btn{display:inline-flex;align-items:center;gap:8px;height:48px;padding:0 26px;
+  border-radius:var(--radius-pill);font:600 16px var(--font-body);border:0;cursor:pointer;
+  text-decoration:none;transition:background-color var(--dur-fast) linear,color var(--dur-fast) linear,
+  box-shadow var(--dur-base) ease,transform var(--dur-base) ease}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--higala-teal);color:#fff}
+.btn-primary:hover{background:var(--higala-teal-700);text-decoration:none}
+.btn-grad{background:var(--grad-brand);color:#fff;box-shadow:var(--shadow-brand)}
+.btn-grad:hover{filter:brightness(1.06);text-decoration:none}
+.btn-white{background:#fff;color:var(--ink)}
+.btn-white:hover{background:var(--higala-teal-050);text-decoration:none}
+.btn-outline{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.btn-outline:hover{background:var(--surface-2);text-decoration:none}
+.btn-ghost-ink{background:rgba(255,255,255,.12);color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.28)}
+.btn-ghost-ink:hover{background:rgba(255,255,255,.2);text-decoration:none}
+.tlink{font:600 16px var(--font-body);color:var(--higala-teal-700);display:inline-flex;
+  align-items:center;gap:7px;text-decoration:none}
+.tlink:hover{color:var(--higala-teal-800);text-decoration:underline}
+.on-ink .tlink{color:var(--higala-green)}
+.cta-row{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+:focus-visible{outline:0;box-shadow:var(--ring-focus)}
+
+/* header — glass over ink hero */
+header{position:sticky;top:0;z-index:60;background:rgba(18,36,36,.92);
+  backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.1)}
+.hd{max-width:var(--page-max);margin:0 auto;padding:14px var(--gutter);
+  display:flex;align-items:center;gap:32px}
+.hd img{height:26px;display:block}
+.hd nav{display:flex;gap:26px;font-size:15px;font-weight:500}
+.hd nav a{color:rgba(255,255,255,.82);transition:color var(--dur-fast) linear}
+.hd nav a:hover,.hd nav a.act{color:var(--higala-green);text-decoration:none}
+.hd .right{margin-left:auto;display:flex;align-items:center;gap:16px}
+.hd .btn{height:40px;padding:0 20px;font-size:15px}
+.pager{display:flex;gap:4px;background:rgba(255,255,255,.1);padding:4px;border-radius:var(--radius-pill)}
+.pager button{border:0;background:transparent;font:600 13px var(--font-body);
+  color:rgba(255,255,255,.7);padding:6px 14px;border-radius:var(--radius-pill);cursor:pointer}
+.pager button.on{background:#fff;color:var(--ink)}
+
+/* sections */
+section{padding:clamp(56px,7vw,96px) 0}
+section.tint{background:var(--surface-1)}
+section.ink{background:var(--ink)}
+.on-ink,.on-ink h1,.on-ink h2,.on-ink h3{color:#fff}
+.on-ink p{color:rgba(255,255,255,.76)}
+.lede{font-size:18px;line-height:1.6;max-width:640px;margin-top:20px;color:var(--ink-600)}
+.on-ink .lede{color:rgba(255,255,255,.82)}
+.sub{font-size:18px;max-width:640px;margin-top:18px}
+
+/* hero */
+.hero{background:var(--grad-brand-deep);padding:88px 0 80px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+  gap:clamp(32px,5vw,72px);align-items:center}
+.hero-grid .hero-copy{min-width:0}
+
+/* ===== HERO COMPOSITION ===== */
+.comp{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto;
+  gap:clamp(10px,1.6vw,20px);align-items:center}
+.comp-col{display:flex;flex-direction:column;gap:12px}
+
+/* small capability chips (left) */
+.chip{width:84px;padding:14px 6px;border-radius:var(--radius-card);text-align:center;
+  background:rgba(18,36,36,.34);box-shadow:inset 0 0 0 1px rgba(255,255,255,.24);
+  backdrop-filter:blur(8px)}
+.chip svg{width:22px;height:22px;stroke:#fff;stroke-width:1.8;fill:none;
+  stroke-linecap:round;stroke-linejoin:round;margin:0 auto 8px;display:block}
+.chip span{display:block;font:600 9.5px var(--font-body);letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(255,255,255,.9);line-height:1.25}
+
+/* centre stage: photo frame + DBaaS badge */
+.stage{position:relative;border-radius:var(--radius-media);overflow:hidden;
+  background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3),var(--shadow-lg);
+  aspect-ratio:1/1.12;min-width:0;display:grid;place-items:center}
+.stage img{width:100%;height:100%;object-fit:cover;display:block}
+.stage .drop{padding:26px 22px 26px 58px;text-align:center;position:relative;z-index:2}
+.stage .drop b{display:block;font:600 14px var(--font-display);color:#fff;margin-bottom:6px}
+.stage .drop span{font:400 12px var(--font-body);color:rgba(255,255,255,.78);line-height:1.5}
+.stage:after{content:"";position:absolute;inset:0;background:var(--grad-ink);opacity:.5;
+  pointer-events:none}
+.dbaas{position:absolute;left:-30px;top:50%;transform:translateY(-50%);z-index:3;
+  width:106px;padding:16px 10px;border-radius:22px;text-align:center;
+  background:linear-gradient(150deg,#00615D,#0B3B3A);
+  box-shadow:0 10px 26px rgba(18,36,36,.34),inset 0 0 0 1px rgba(255,255,255,.18)}
+.dbaas svg{width:26px;height:26px;stroke:var(--higala-green);stroke-width:1.8;fill:none;
+  stroke-linecap:round;stroke-linejoin:round;margin:0 auto 8px;display:block}
+.dbaas span{font:600 10.5px var(--font-body);letter-spacing:.04em;color:#fff;line-height:1.35;display:block}
+
+/* capability cards (right) */
+.cap{width:132px;background:#fff;border-radius:var(--radius-card);padding:16px 14px;
+  box-shadow:var(--shadow-md);transition:transform var(--dur-base) var(--ease)}
+.cap:hover{transform:translateY(-2px)}
+.cap svg{width:22px;height:22px;stroke:var(--higala-teal);stroke-width:1.9;fill:none;
+  stroke-linecap:round;stroke-linejoin:round;margin-bottom:10px;display:block}
+.cap span{font:600 11.5px var(--font-body);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink);line-height:1.3;display:block}
+.hero:after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 80% at 85% 10%,rgba(255,255,255,.14),transparent 60%);pointer-events:none}
+.hero .wrap{position:relative;z-index:1}
+.hero h1{max-width:16ch;font-size:clamp(32px,4.4vw,58px);line-height:1.04}
+.hero .lede{max-width:52ch;font-size:clamp(16px,1.35vw,19px)}
+.rotator{display:inline-grid;vertical-align:bottom}
+.rot-word{grid-area:1/1;opacity:0;transform:translateY(4px);white-space:nowrap;
+  transition:opacity var(--dur-slow) var(--ease),transform var(--dur-slow) var(--ease);color:#fff}
+.rot-word.on{opacity:1;transform:none}
+.trust{margin-top:52px;padding-top:22px;border-top:1px solid rgba(255,255,255,.22);
+  font-size:14px;color:rgba(255,255,255,.72);display:flex;gap:10px;flex-wrap:wrap}
+.trust span:not(:last-child):after{content:" ·";margin-left:10px;color:rgba(255,255,255,.4)}
+
+/* partner marquee */
+.marq{overflow:hidden;padding:40px 0 44px;background:#fff;border-bottom:1px solid var(--line)}
+.marq-lead{font:600 12px/1.5 var(--font-body);color:var(--higala-teal);
+  letter-spacing:.14em;text-transform:uppercase;
+  max-width:76ch;margin:0 auto 28px;text-align:center;text-wrap:balance}
+.marq-t{display:flex;gap:64px;width:max-content;animation:sl 34s linear infinite}
+@keyframes sl{to{transform:translateX(-50%)}}
+.marq-t span{font:600 17px var(--font-display);color:var(--ink-400);white-space:nowrap;
+  filter:grayscale(1);letter-spacing:-.01em}
+
+/* ===== STRIPE-STYLE EXPANDING PANELS ===== */
+.panels{display:flex;gap:14px;margin-top:48px}
+.panel{position:relative;border-radius:var(--radius-hero);overflow:hidden;min-height:560px;
+  background:var(--surface-2);border:1px solid var(--line);cursor:pointer;
+  flex:0 0 96px;transition:flex-basis var(--dur-slow) var(--ease),flex-grow var(--dur-slow) var(--ease),
+  box-shadow var(--dur-base) ease}
+.panel:hover{box-shadow:var(--shadow-md)}
+.panel.open{flex:1 1 auto;cursor:default;box-shadow:var(--shadow-lg)}
+.panel .bgwash{position:absolute;inset:0;opacity:.96}
+.panel[data-k="pb"] .bgwash{background:linear-gradient(158deg,#00615D 0%,#00847E 62%,#00A8A0 100%)}
+.panel[data-k="iip"] .bgwash{background:linear-gradient(158deg,#0B3B3A 0%,#00847E 55%,#5CCBC5 130%)}
+.panel[data-k="dl"] .bgwash{background:var(--grad-brand-deep)}
+.panel .mesh{position:absolute;inset:0;opacity:.5;
+  background:radial-gradient(90% 70% at 90% 0%,rgba(255,255,255,.22),transparent 55%),
+  repeating-linear-gradient(122deg,rgba(255,255,255,.07) 0 1px,transparent 1px 46px)}
+
+/* collapsed rail */
+.rail{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  gap:22px;padding:22px 0;transition:opacity var(--dur-base) var(--ease)}
+.rail .vt{writing-mode:vertical-rl;transform:rotate(180deg);font:600 19px var(--font-display);
+  color:#fff;letter-spacing:-.01em;white-space:nowrap;flex:1 1 auto;min-height:0;overflow:hidden}
+.maxbtn{width:42px;height:42px;flex:0 0 42px;border-radius:var(--radius-pill);border:0;
+  background:rgba(255,255,255,.18);box-shadow:inset 0 0 0 1px rgba(255,255,255,.36);
+  color:#fff;cursor:pointer;display:grid;place-items:center;
+  transition:background var(--dur-fast) linear,transform var(--dur-base) ease}
+.maxbtn:hover{background:rgba(255,255,255,.32)}
+.maxbtn:active{transform:scale(.94)}
+.maxbtn svg{width:18px;height:18px;stroke:#fff;stroke-width:2;fill:none;
+  stroke-linecap:round;stroke-linejoin:round}
+.panel.open .rail{opacity:0;pointer-events:none}
+
+/* expanded body */
+.pbody{position:absolute;inset:0;opacity:0;pointer-events:none;padding:48px 44px;overflow:auto;
+  display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-content:center;align-items:center;
+  transition:opacity var(--dur-slow) var(--ease);min-width:0}
+.panel.open .pbody{opacity:1;pointer-events:auto;transition-delay:120ms}
+.pbody .tagline{font:600 12px var(--font-body);text-transform:uppercase;letter-spacing:.14em;
+  color:var(--higala-green);margin-bottom:16px}
+.pbody h3{color:#fff;font-size:clamp(22px,2.3vw,32px);line-height:1.14;letter-spacing:-.02em;max-width:15ch}
+.pbody p{color:rgba(255,255,255,.82);font-size:16px;margin-top:16px;max-width:46ch}
+.pbody .btn{margin-top:28px}
+.plist{list-style:none;padding:0;margin:0}
+.plist li{position:relative;padding:13px 0 13px 30px;color:#fff;font-size:15.5px;
+  border-bottom:1px solid rgba(255,255,255,.18)}
+.plist li:before{content:"";position:absolute;left:0;top:19px;width:14px;height:14px;
+  border-radius:50%;background:rgba(255,255,255,.2);
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.55)}
+.plist li:after{content:"";position:absolute;left:4.5px;top:23.5px;width:5px;height:5px;
+  border-radius:50%;background:var(--higala-green)}
+.plist li b{font-weight:600}
+.closebtn{position:absolute;top:22px;right:22px;z-index:3}
+.panel:not(.open) .closebtn{display:none}
+.pill-count{display:inline-block;font:600 11px var(--font-mono);letter-spacing:.08em;
+  background:rgba(255,255,255,.18);color:#fff;padding:4px 10px;border-radius:var(--radius-pill);
+  margin-left:10px;vertical-align:3px}
+
+/* benefit marquee (Title Case verb + lowercase clause) */
+.bmarq{overflow:hidden;background:var(--higala-teal-050);
+  border-top:1px solid var(--higala-teal-100);border-bottom:1px solid var(--higala-teal-100);padding:26px 0}
+.bmarq-t{display:flex;gap:56px;width:max-content;animation:sl 46s linear infinite}
+.bmarq-t i{font-style:normal;white-space:nowrap;font-size:16px;color:var(--ink-600)}
+.bmarq-t i b{font-family:var(--font-display);font-weight:600;color:var(--ink);margin-right:8px}
+
+/* cards + grids */
+.grid{display:grid;gap:24px;margin-top:48px}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface-0);border:1px solid var(--line);border-radius:var(--radius-card);
+  padding:32px;box-shadow:var(--shadow-sm)}
+.card.soft{background:var(--higala-teal-050);border-color:var(--higala-teal-100)}
+/* Why Higala: two-line heading block so every card body starts on the same line */
+#why .card h4{min-height:calc(2 * 1.3em)}
+/* Outcome band: reserve two heading lines so every paragraph starts on the same line */
+#dl-outcomes h4{min-height:calc(2 * 1.3em)}
+@media(max-width:760px){#dl-outcomes h4{min-height:0}}
+.card h3,.card h4{margin-bottom:10px}
+.card p{font-size:15.5px}
+.ic{width:26px;height:26px;margin-bottom:16px;stroke:var(--higala-teal);stroke-width:2;
+  fill:none;stroke-linecap:round;stroke-linejoin:round;display:block}
+ul.f{list-style:none;padding:0;margin:22px 0 0;max-width:820px}
+ul.f li{position:relative;padding:13px 0 13px 30px;font-size:16px;border-bottom:1px solid var(--line)}
+ul.f li:before{content:"";position:absolute;left:3px;top:20px;width:8px;height:8px;
+  border-radius:50%;background:var(--higala-teal)}
+ul.f li b{color:var(--ink);font-weight:600}
+
+/* pillars */
+.pillar{background:#fff;border:1px solid var(--line);border-radius:var(--radius-card);padding:32px}
+.pillar.lead{border-color:var(--higala-teal);border-width:2px;box-shadow:var(--shadow-md)}
+.ptag{font:600 12px var(--font-body);text-transform:uppercase;letter-spacing:.14em;
+  color:var(--higala-teal);margin-bottom:14px}
+.badge{display:inline-block;font:600 11px var(--font-body);text-transform:uppercase;
+  letter-spacing:.08em;background:var(--higala-teal-050);color:var(--higala-teal-800);
+  padding:5px 11px;border-radius:var(--radius-pill);margin-left:10px;vertical-align:3px}
+
+/* table */
+table{width:100%;border-collapse:collapse;margin-top:40px;font-size:16px}
+th,td{text-align:left;padding:15px 18px;border-bottom:1px solid var(--line)}
+th{font:600 12px var(--font-body);text-transform:uppercase;letter-spacing:.14em;color:var(--ink-500)}
+td:first-child{color:var(--ink-500)}
+td:last-child{color:var(--ink);font-weight:500;background:var(--higala-teal-050)}
+
+/* qa + stats */
+.qa{padding:24px 0;border-bottom:1px solid var(--line)}
+.qa h4{margin-bottom:8px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:44px}
+.stat b{display:block;font:700 clamp(30px,3.4vw,40px)/1.1 var(--font-display);color:var(--ink);letter-spacing:-.02em;line-height:1.1}
+.stat span{font-size:14px;color:var(--ink-500)}
+.stat{border-top:2px solid var(--higala-teal);padding-top:16px}
+
+/* gradient CTA */
+.ctapanel{background:var(--grad-brand);border-radius:var(--radius-hero);padding:clamp(28px,4vw,64px);
+  box-shadow:var(--shadow-brand);color:#fff}
+.ctapanel h2{color:#fff;font-size:clamp(24px,3.2vw,38px);max-width:22ch}
+.ctapanel p{color:rgba(255,255,255,.9);font-size:18px;max-width:56ch;margin-top:18px}
+
+/* footer */
+footer{background:var(--ink);color:rgba(255,255,255,.68);padding:64px 0 40px;font-size:14px}
+footer img{height:24px;margin-bottom:24px}
+.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}
+footer h4{color:#fff;font-size:13px;text-transform:uppercase;letter-spacing:.14em;
+  font-family:var(--font-body);margin-bottom:14px}
+footer a{color:rgba(255,255,255,.68);display:block;padding:5px 0}
+footer a:hover{color:var(--higala-green);text-decoration:none}
+.fbot{margin-top:48px;padding-top:24px;border-top:1px solid rgba(255,255,255,.14);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--ink-400)}
+
+/* placeholder chip + notes */
+.ph{background:rgba(229,161,0,.14);color:#8A5A17;border:1px solid rgba(229,161,0,.36);
+  border-radius:var(--radius-sm);padding:0 6px;font-weight:600;font-size:.94em}
+.on-ink .ph,.ctapanel .ph,.pbody .ph{background:rgba(255,255,255,.2);color:#fff;
+  border-color:rgba(255,255,255,.42)}
+.note{margin-top:22px;font-size:14px;color:var(--ink-500);background:var(--surface-1);
+  border-left:2px solid var(--higala-teal-100);padding:13px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+section.tint .note{background:#fff}
+
+.page{display:none}.page.show{display:block}
+
+/* ── tablet / small laptop ───────────────────────────────────────── */
+@media(max-width:1080px){
+  .hero-grid{grid-template-columns:1fr;gap:44px}
+  .hero h1,.hero .lede{max-width:none}
+  .comp{max-width:620px;margin:0 auto}
+  .cap{width:118px}
+  .chip{width:76px}
+  .dbaas{left:-18px;width:84px}
+  .g4{grid-template-columns:repeat(2,1fr)}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .hd nav{display:none}
+}
+
+/* ── mobile ──────────────────────────────────────────────────────── */
+@media(max-width:760px){
+  .g2,.g3,.g4,.stats,.fgrid{grid-template-columns:1fr}
+  .card{padding:24px}
+  .pillar{padding:24px}
+  .hero{padding:56px 0 60px}
+  .trust{margin-top:36px;font-size:13px;flex-direction:column;gap:8px}
+  .trust span:not(:last-child):after{content:""}
+  .cta-row{gap:16px}
+  .cta-row .btn{width:100%;justify-content:center}
+  .marq-lead{font-size:11px;letter-spacing:.1em}
+
+  /* composition restacks: photo on top, chips + cards as rows beneath */
+  .comp{display:flex;flex-direction:column;gap:14px;max-width:none}
+  .comp-col{flex-direction:row;flex-wrap:wrap;gap:10px;justify-content:center}
+  .chip,.cap{width:calc(50% - 5px);display:flex;align-items:center;gap:10px;text-align:left}
+  .chip svg,.cap svg{margin:0;flex:0 0 auto}
+  .chip{padding:12px 14px}
+  .cap{padding:14px}
+  .stage{order:-1;width:100%;aspect-ratio:4/3.2}
+  .stage .drop{padding:66px 18px 22px}
+  .ov-hero{font-size:10.5px;letter-spacing:.08em}
+  .dbaas{left:auto;right:14px;top:14px;transform:none;width:78px;padding:11px 6px}
+  .dbaas svg{width:20px;height:20px;margin-bottom:6px}
+  .dbaas span{font-size:9px}
+
+  /* panels become a stacked accordion */
+  .panels{flex-direction:column;gap:12px;margin-top:32px}
+  .panel{flex:0 0 auto;min-height:0;border-radius:var(--radius-media)}
+  .panel .pbody{position:static;inset:auto;overflow:visible;padding:24px;
+    grid-template-columns:1fr;gap:24px}
+  .panel:not(.open) .pbody{display:none}
+  .rail{position:static;flex-direction:row;justify-content:space-between;
+    align-items:center;padding:18px 20px;gap:14px}
+  .rail .vt{writing-mode:horizontal-tb;transform:none;font-size:17px;
+    white-space:normal;flex:1 1 auto;overflow:visible}
+  .panel.open .rail{display:none}
+  .closebtn{top:16px;right:16px;width:36px;height:36px;flex-basis:36px}
+  .plist li{padding:11px 0 11px 28px;font-size:15px}
+
+  /* table reflows to stacked pairs */
+  table,tbody,tr,td,th{display:block;width:100%}
+  table{margin-top:28px}
+  tr{border-bottom:1px solid var(--line);padding:6px 0}
+  tr:first-child{display:none}
+  td{border:0;padding:8px 0}
+  td:first-child:before{content:"Today — ";font-weight:600;color:var(--ink-400)}
+  td:last-child{background:transparent;padding-top:0}
+  td:last-child:before{content:"On Higala — ";font-weight:600;color:var(--higala-teal-800)}
+}
+
+/* ── very narrow ─────────────────────────────────────────────────── */
+@media(max-width:420px){
+  .chip,.cap{width:100%}
+  .hd{gap:12px}
+  .pager{display:none}
+  .hd .btn{padding:0 14px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .rotator{display:inline}.rot-word{opacity:1;transform:none;transition:none}
+  .cap:hover{transform:none}
+  .rot-word:not(:last-child):after{content:", "}.rot-word:last-child:before{content:"and "}
+  .marq-t,.bmarq-t{animation:none}
+  .panel,.pbody{transition:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hd">
+    <img src="data:image/png;base64,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" alt="Higala">
+    <nav>
+      <a href="#solutions" class="act">Our Solutions</a>
+      <a href="#" data-goto="dl">Digital Lending</a>
+      <a href="#why">Why Higala</a>
+      <a href="#news">News</a>
+    </nav>
+    <div class="right">
+      <div class="pager">
+        <button class="on" data-p="home">Home</button>
+        <button data-p="dl">Digital Lending</button>
+      </div>
+      <a class="btn btn-grad" href="#demo">Book a Demo</a>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════ HOME ══════════════════ -->
+<div class="page show" id="home">
+
+<section class="hero on-ink">
+  <div class="wrap">
+   <div class="hero-grid">
+    <div class="hero-copy">
+    <div class="ov ov-hero">Payments and digital banking infrastructure for
+      <span class="rotator" id="rot" aria-live="polite"><span class="rot-word on">Banks</span><span class="rot-word">Cooperatives</span><span class="rot-word">Microfinance Institutions</span></span>
+      <noscript>Banks, Cooperatives, and Microfinance Institutions</noscript>
+    </div>
+    <h1>Modernize without the multi-million peso CapEx trap.</h1>
+    <p class="lede">Higala delivers payments and digital banking infrastructure for rural banks and cooperatives — designed to work individually or together.</p>
+    <div class="cta-row" style="margin-top:40px">
+      <a class="btn btn-white" href="#demo">Book a Demo</a>
+      <a class="tlink" href="#solutions">Explore our solutions
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+    </div><!-- /hero-copy -->
+
+    <div class="comp">
+      <div class="comp-col">
+        <div class="chip"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9zM9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg><span>API</span></div>
+        <div class="chip"><svg viewBox="0 0 24 24"><path d="M8 3L4 7l4 4"/><path d="M4 7h16"/><path d="M16 21l4-4-4-4"/><path d="M20 17H4"/></svg><span>InstaPay Rail</span></div>
+        <div class="chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="5" r="2.4"/><circle cx="19" cy="5" r="2.4"/><circle cx="5" cy="19" r="2.4"/><circle cx="19" cy="19" r="2.4"/><path d="M6.8 6.8l2.8 2.8M17.2 6.8l-2.8 2.8M6.8 17.2l2.8-2.8M17.2 17.2l-2.8-2.8"/></svg><span>Ecosystem</span></div>
+      </div>
+
+      <div class="stage">
+        <div class="dbaas">
+          <svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10 18h4"/><path d="M14 8h5a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-5"/></svg>
+          <span>Digital Banking<br>as a Service</span>
+        </div>
+        <!-- SWAP: set src to the photo file, then delete the .drop block below.
+             <img src="hero-photo.jpg" alt="A bank customer using digital banking on her phone"> -->
+        <div class="drop">
+          <b>Photo drops in here</b>
+          <span>Replace with the woman-on-phone photo. Uncomment the &lt;img&gt; above, point src at the file, delete this block.</span>
+        </div>
+      </div>
+
+      <div class="comp-col">
+        <div class="cap"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="13" rx="2.5"/><path d="M2 11h20M6 15h4"/></svg><span>Deposits</span></div>
+        <div class="cap"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7v6h-6"/></svg><span>Lending</span></div>
+        <div class="cap"><svg viewBox="0 0 24 24"><path d="M7 4L3 8l4 4"/><path d="M3 8h13"/><path d="M17 20l4-4-4-4"/><path d="M21 16H8"/></svg><span>Payments</span></div>
+        <div class="cap"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10M19 21V10M12 3l9 5H3z"/><path d="M9 21v-6h6v6"/></svg><span>Platform Banking</span></div>
+      </div>
+    </div>
+   </div><!-- /hero-grid -->
+   <div class="trust">
+     <span>Built on Mojaloop and ISO 20022</span>
+     <span>InstaPay access through RCBC as sponsor bank</span>
+     <span>Co-founded by Talino Venture Studios and Chemonics International</span>
+   </div>
+  </div>
+</section>
+
+<div class="marq">
+  <div class="wrap">
+    <p class="marq-lead">Higala works with the leading financial innovators in the Philippines and around the world</p>
+  </div>
+  <div class="marq-t" aria-hidden="true">
+    <span>RCBC</span><span>Mojaloop Foundation</span><span>Talino Venture Studios</span><span>Chemonics International</span><span>RCBC</span><span>Mojaloop Foundation</span><span>Talino Venture Studios</span><span>Chemonics International</span>
+  </div>
+</div>
+
+<section class="tint" id="why">
+  <div class="wrap">
+    <div class="ov">Why Higala</div>
+    <h2 style="max-width:30ch">We built the interoperable rail that connects financial institutions directly to InstaPay.</h2>
+    <p class="sub" style="max-width:700px;font-size:19px">Because we operate the sole Platform Bank program recognized by the BSP, partnering with Higala directly accelerates your EPFS licensing path.</p>
+    <div class="grid g3">
+      <div class="card soft">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M8 3L4 7l4 4"/><path d="M4 7h16"/><path d="M16 21l4-4-4-4"/><path d="M20 17H4"/></svg>
+        <h4>The interoperable rail</h4>
+        <p>Instead of every small bank trying to build their own expensive, complex road to the national payment network, we provide a shared connection to InstaPay.</p>
+      </div>
+      <div class="card soft">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M12 2l9 5v6c0 5-4 8-9 9-5-1-9-4-9-9V7z"/><path d="M9 12l2 2 4-4"/></svg>
+        <h4>The only BSP-recognized Platform Bank program</h4>
+        <p>Not a vendor claim about compliance. A program the central bank already recognizes.</p>
+      </div>
+      <div class="card soft">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 11-13h-7z"/></svg>
+        <h4>A faster EPFS licensing path</h4>
+        <p>Partnering with Higala accelerates your Electronic Payment and Financial Services licensing process.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════ EXPANDING PANELS (Stripe-style) ═════ -->
+<section id="solutions">
+  <div class="wrap">
+    <div class="ov">Our Solutions</div>
+    <h2 style="max-width:34ch">Explore our solutions and choose where to go next across Lending, Inclusive Instant Payments, and Platform Banking.</h2>
+
+    <div class="panels" id="panels">
+
+      <!-- Digital Lending — open by default -->
+      <article class="panel open" data-k="dl" tabindex="0" aria-expanded="true">
+        <div class="bgwash"></div><div class="mesh"></div>
+        <div class="rail">
+          <button class="maxbtn" aria-label="Expand Digital Lending Platform">
+            <svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
+          <div class="vt">Digital Lending Platform</div>
+        </div>
+        <button class="maxbtn closebtn" aria-label="Collapse">
+          <svg viewBox="0 0 24 24"><path d="M4 14h6v6M20 10h-6V4M10 14l-7 7M14 10l7-7"/></svg></button>
+        <div class="pbody">
+          <div>
+            <div class="tagline">Digital Lending Platform</div>
+            <h3>Lend digitally end to end, from application to repayment.</h3>
+            <p>Higala helps you digitize the loan lifecycle — from origination, underwriting, servicing, to real-time collections over InstaPay. Higala's digital lending sits right alongside your existing core banking system. Keep your core. Skip the migration.</p>
+            <a class="btn btn-white" href="#" data-goto="dl">Explore the platform</a>
+          </div>
+          <ul class="plist">
+            <li><b>Collect</b> — repayments settle in real time and post themselves. No T+1 batch file.</li>
+            <li><b>Originate</b> — digital application, electronic KYC, and approval workflows you configure.</li>
+            <li><b>Score</b> — underwriting rules you control, informed by your own repayment data.</li>
+            <li><b>No upfront CapEx</b> — we earn when you earn, taking only a share of the interest you collect.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Platform Bank -->
+      <article class="panel" data-k="pb" tabindex="0" aria-expanded="false">
+        <div class="bgwash"></div><div class="mesh"></div>
+        <div class="rail">
+          <button class="maxbtn" aria-label="Expand Platform Bank">
+            <svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
+          <div class="vt">Platform Bank</div>
+        </div>
+        <button class="maxbtn closebtn" aria-label="Collapse">
+          <svg viewBox="0 0 24 24"><path d="M4 14h6v6M20 10h-6V4M10 14l-7 7M14 10l7-7"/></svg></button>
+        <div class="pbody">
+          <div>
+            <div class="tagline">Platform Bank</div>
+            <h3>Modern banking services without building from scratch.</h3>
+            <p>Higala helps microfinance institutions, rural banks, and thrift banks deliver modern, connected, and customer-centric services without the high cost or complexity of building from scratch. Integrate digital payments, loans, deposits, and partner services into one secure platform.</p>
+            <a class="btn btn-white" href="#demo">Know More</a>
+          </div>
+          <ul class="plist">
+            <li><b>Digital payments</b> — send and receive over national real-time rails.</li>
+            <li><b>Deposits and loans</b> — core banking services delivered as a platform.</li>
+            <li><b>Partner services</b> — connect third-party products without separate builds.</li>
+            <li><b>One console</b> — operations, reconciliation, and reporting in a single place.</li>
+            <li><b>Built for supervised institutions</b> — controls and audit trails your examiners expect.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Inclusive Instant Payments -->
+      <article class="panel" data-k="iip" tabindex="0" aria-expanded="false">
+        <div class="bgwash"></div><div class="mesh"></div>
+        <div class="rail">
+          <button class="maxbtn" aria-label="Expand Inclusive Instant Payments">
+            <svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
+          <div class="vt">Inclusive Instant Payments</div>
+        </div>
+        <button class="maxbtn closebtn" aria-label="Collapse">
+          <svg viewBox="0 0 24 24"><path d="M4 14h6v6M20 10h-6V4M10 14l-7 7M14 10l7-7"/></svg></button>
+        <div class="pbody">
+          <div>
+            <div class="tagline">Inclusive Instant Payments</div>
+            <h3>Low-cost instant payment systems, built on Mojaloop.</h3>
+            <p>As a trusted payments innovation partner, Higala helps regulators, central banks, and payment operators build low-cost, inclusive Instant Payment Systems (IIPS) and Real-Time Payment (RTP) solutions on Mojaloop. Our team brings deep technical expertise and regulatory insight to architect and deliver these systems.</p>
+            <a class="btn btn-white" href="#demo">Get in touch</a>
+          </div>
+          <ul class="plist">
+            <li><b>Hub business operations</b> and scheme design.</li>
+            <li><b>IPS consulting services</b> for regulators and operators.</li>
+            <li><b>Full technical deployment</b> of instant payment systems.</li>
+            <li><b>Open standards</b> — Mojaloop and ISO 20022, not proprietary lock-in.</li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+    <div class="note"><b>Interaction:</b> click a collapsed rail — or its expand button — to open that segment. One panel is open at a time; Digital Lending is the default. Arrow keys move between panels, Enter or Space opens the focused one.</div>
+  </div>
+</section>
+
+<div class="bmarq" aria-hidden="true">
+  <div class="bmarq-t">
+    <i><b>Modernize Payment Systems</b> to support innovative financial services</i>
+    <i><b>Lower On-Ramp Barrier Costs</b> to expand financial inclusion</i>
+    <i><b>Build Resiliency in the Financial System</b> through a parallel infrastructure</i>
+    <i><b>Reach More Customers</b> with connected payment and digital service integration</i>
+    <i><b>Lower Transaction Costs</b> for real-time payments and settlements</i>
+    <i><b>Modernize Payment Systems</b> to support innovative financial services</i>
+    <i><b>Lower On-Ramp Barrier Costs</b> to expand financial inclusion</i>
+    <i><b>Build Resiliency in the Financial System</b> through a parallel infrastructure</i>
+    <i><b>Reach More Customers</b> with connected payment and digital service integration</i>
+    <i><b>Lower Transaction Costs</b> for real-time payments and settlements</i>
+  </div>
+</div>
+
+<section class="tint" id="news">
+  <div class="wrap">
+    <div class="ov">Proof</div>
+    <h2>Institutions running on Higala.</h2>
+    <div class="stats">
+      <div class="stat"><b><span class="ph">[XX]</span></b><span>Institutions live</span></div>
+      <div class="stat"><b>₱ <span class="ph">[XX]</span>M</b><span>Disbursed</span></div>
+      <div class="stat"><b><span class="ph">[XX]</span>%</b><span>Repayments settled in real time</span></div>
+      <div class="stat"><b><span class="ph">[XX]</span>%</b><span>Reduction in reconciliation hours</span></div>
+    </div>
+    <div class="card" style="margin-top:44px;max-width:760px">
+      <p style="font-size:19px;color:var(--ink)">"For an affordable fee, Higala will provide all services to rural banks to help them join the InstaPay system."</p>
+      <p style="margin-top:14px;font-size:14px;color:var(--ink-500)">Miller Abel — Bill &amp; Melinda Gates Foundation</p>
+    </div>
+    <div class="note">Add a second quote from a live institution GM. Ask one question: <b>"What did your team stop doing after go-live?"</b> The answer is the testimonial.</div>
+  </div>
+</section>
+
+<section id="demo">
+  <div class="wrap">
+    <div class="ctapanel">
+      <h2>See it run on your own numbers.</h2>
+      <p>Bring one loan product and one week of collections. In 30 minutes we'll show you exactly where the manual work goes and what settles in real time instead. No commitment, no CapEx, no core migration.</p>
+      <div class="cta-row" style="margin-top:36px">
+        <a class="btn btn-white" href="#">Book a Demo</a>
+        <a class="tlink" style="color:#fff" href="#">Or send us a DM
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ══════════════════ /digital-lending ══════════════════ -->
+<div class="page" id="dl">
+
+<section class="hero on-ink">
+  <div class="wrap">
+    <div class="ov">Digital Lending Platform</div>
+    <h1 style="max-width:22ch">Lend digitally end to end, from application to repayment.</h1>
+    <p class="lede">A complete lending core for rural banks, cooperatives, and MFIs — origination, underwriting, servicing, and real-time collections over InstaPay. Runs alongside your existing core. No upfront CapEx.</p>
+    <div class="cta-row" style="margin-top:40px">
+      <a class="btn btn-white" href="#">Book a Demo</a>
+      <a class="tlink" href="#collections">See how collections settle in real time
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<section class="tint" id="dl-outcomes">
+  <div class="wrap">
+    <div class="grid g4" style="margin-top:0">
+      <div><svg class="ic" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10 18h4"/><path d="M13 6l-2.5 3.5H13L11 13"/></svg><h4>Make repayments effortless</h4><p style="font-size:15.5px">A customer in a far barangay pays in seconds instead of losing half a day and a fare. Convenience drives on-time payment — the cheapest NPL reduction there is.</p></div>
+      <div><svg class="ic" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7v6h-6"/></svg><h4>Grow the book without growing headcount</h4><p style="font-size:15.5px">Faster turnaround captures borrowers who would otherwise go to high-interest lenders, and the small-ticket tier you could never staff becomes volume.</p></div>
+      <div><svg class="ic" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20V8"/></svg><h4>Decide on real data</h4><p style="font-size:15.5px">Underwrite on observed repayment behaviour from your own portfolio, not on a form and a hunch.</p></div>
+      <div><svg class="ic" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13A4 4 0 0 1 16 11"/></svg><h4>Keep the primary financial relationship</h4><p style="font-size:15.5px">Your customers will use other e-wallets — that's a given. The question is where they borrow and save.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="ov">Origination</div>
+    <h2>Take loan applications digitally.</h2>
+    <p class="sub">Borrowers apply from a phone. Branch staff work the same queue. Loan officers capture applications on a tablet in the field. Documents, KYC, and credit-committee approvals move through one system with one audit trail.</p>
+    <ul class="f">
+      <li><b>Digital application flows</b> — no manual paperwork. Capture digital loan applications for high-velocity tiers instantly and give your customers a fast, modern borrowing experience from anywhere.</li>
+      <li><b>Electronic KYC and document capture</b> — photo capture and identity verification</li>
+      <li><b>Configurable approval workflows</b> — mirror your existing credit committee and delegation limits</li>
+      <li><b>Full audit trail</b> — every action, every approver, every timestamp, examination-ready</li>
+    </ul>
+  </div>
+</section>
+
+<section class="tint">
+  <div class="wrap">
+    <div class="ov">Underwriting and Scoring</div>
+    <h2>Your credit policy, applied consistently.</h2>
+    <p class="sub">You set the rules. Higala applies them the same way on every application. As repayments run through the platform, the scoring layer learns from behaviour you can see and audit — never from a model you can't inspect.</p>
+    <ul class="f">
+      <li><b>Rules engine you control</b> — thresholds, ratios, exclusions, and overrides configured by your credit team</li>
+      <li><b>Behavioural repayment signals</b> — on-time and late patterns from your own borrowers</li>
+      <li><b>Consistent decisions</b> — the same inputs produce the same outcome regardless of who keys them</li>
+      <li><b>Portfolio and vintage views</b> — see how each cohort performs, per product and per branch</li>
+      <li><b>Board and BSP reporting</b> — pull the numbers instead of assembling them</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="ov">Servicing and Disbursement</div>
+    <h2>Release funds and track them from the same place.</h2>
+    <p class="sub">Approve a loan and disburse it to the borrower's bank account or e-wallet over InstaPay. The disbursement, the schedule, and the ledger entry are one event, not three handoffs.</p>
+    <ul class="f">
+      <li><b>Real-time disbursement</b> to any InstaPay-reachable account or wallet</li>
+      <li><b>Automated amortization schedules</b> per product terms</li>
+      <li><b>Restructuring and rescheduling</b> handled in-system with the audit trail intact</li>
+      <li><b>Arrears and ageing views</b> updated as payments settle, not overnight</li>
+    </ul>
+  </div>
+</section>
+
+<section class="tint" id="collections">
+  <div class="wrap">
+    <div class="ov">Collections</div>
+    <h2>Repayments that reconcile themselves.</h2>
+    <p class="sub">This is where the manual work goes. Higala connects your institution to InstaPay through RCBC as sponsor bank. Borrowers pay from any bank or e-wallet in the country. Funds credit your account in real time, carry a reference your system matches on the first pass, and post against the right loan without anyone opening a spreadsheet.</p>
+    <table>
+      <tr><th>Today</th><th>On Higala</th></tr>
+      <tr><td>Collections arrive as a T+1 batch file</td><td>Payments credit and post in real time</td></tr>
+      <tr><td>Staff match payments to accounts by hand</td><td>Matching happens on the reference, automatically</td></tr>
+      <tr><td>Exceptions found the next day, or later</td><td>Exceptions surface at the moment of settlement</td></tr>
+      <tr><td>Collections position is always a day stale</td><td>Live position for provisioning and reporting</td></tr>
+      <tr><td>Every new account adds reconciliation load</td><td>Volume scales without added manual work</td></tr>
+    </table>
+    <ul class="f">
+      <li><b>Sponsor-bank access to InstaPay</b> — RCBC's connection, certification, and settlement plumbing</li>
+      <li><b>Pay-in from any Philippine bank or e-wallet</b> — meet borrowers where their money already is. Since BSP Circular 1238 took effect in 2026, most major banks and e-wallets charge nothing for InstaPay transfers, so paying you costs the borrower nothing.</li>
+      <li><b>Automatic posting</b> — every payment posts to the borrower's loan account as it settles</li>
+      <li><b>Real-time settlement visibility</b> — every payment traceable end to end</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="ov">Platform and Integration</div>
+    <h2>Sits alongside your core. Doesn't ask to replace it.</h2>
+    <p class="sub">Higala's Digital Lending Platform is delivered as a service and works with the core banking system you run today. There is no hardware to buy and no licence to capitalize. If you change core banking system in three years, Higala stays.</p>
+    <ul class="f">
+      <li><b>No CapEx</b> — we earn when you earn, taking only a share of the interest you collect</li>
+      <li><b>Your institution remains lender of record</b> — RCBC sponsors the rail connection under its own BSP authority</li>
+    </ul>
+  </div>
+</section>
+
+<section class="tint">
+  <div class="wrap">
+    <div class="ov">Strategic Sequencing</div>
+    <h2>Start with repayments.</h2>
+    <div class="grid g3">
+      <div class="card soft"><div class="ptag">Collect</div><p>Real-time repayments over InstaPay. The fastest win, and the one most institutions start with.</p></div>
+      <div class="card"><div class="ptag">Originate</div><p>Digital loan applications for ₱20,000 and below, decisioned in minutes instead of days. Serve the high-velocity tier you've never been able to staff.</p></div>
+      <div class="card"><div class="ptag">Score</div><p>Rules-based underwriting informed by your own data.</p></div>
+    </div>
+    <p class="sub" style="margin-top:32px">Each works on its own. Together they run the loan lifecycle end to end.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="ctapanel">
+      <h2>Bring one week of new loan applications. We'll show you how to make repayments effortless.</h2>
+      <p>A 30-minute working session on your own loan product and your own repayment data. You'll see exactly what settles in real time, what reconciles itself, and what it would take to go live. No CapEx, no core migration, no commitment.</p>
+      <div class="cta-row" style="margin-top:36px">
+        <a class="btn btn-white" href="#">Book a Demo</a>
+        <a class="tlink" style="color:#fff" href="#">Or send us a DM
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <img src="data:image/png;base64,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" alt="Higala">
+        <p style="max-width:34ch">Payments and digital banking infrastructure for banks, cooperatives, and microfinance institutions. Built on Mojaloop and ISO 20022.</p>
+      </div>
+      <div><h4>Solutions</h4><a href="#" data-goto="dl">Digital Lending Platform</a><a href="#solutions">Platform Bank</a><a href="#solutions">Inclusive Instant Payments</a><a href="#">SynerFi</a></div>
+      <div><h4>Company</h4><a href="#why">Why Higala</a><a href="#">Our Team</a><a href="#news">News</a><a href="#">Our Ecosystem</a></div>
+      <div><h4>Get Started</h4><a href="#demo">Book a Demo</a><a href="#">Contact Us</a><a href="#">Our Membership</a></div>
+    </div>
+    <div class="fbot">
+      <span>Copyright © 2026 Higala | All Rights Reserved</span>
+      <span>Co-founded by Talino Venture Studios and Chemonics International</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── rotating eyebrow ────────────────────────────────────────────────
+(function(){
+  var w=document.querySelectorAll('#rot .rot-word');
+  if(!w.length||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var i=0;setInterval(function(){w[i].classList.remove('on');i=(i+1)%w.length;w[i].classList.add('on')},2500);
+})();
+
+// ── Stripe-style expanding panels ───────────────────────────────────
+(function(){
+  var root=document.getElementById('panels');
+  if(!root)return;
+  var panels=Array.prototype.slice.call(root.querySelectorAll('.panel'));
+
+  function open(p){
+    panels.forEach(function(x){
+      var on=x===p;
+      x.classList.toggle('open',on);
+      x.setAttribute('aria-expanded',on?'true':'false');
+    });
+  }
+  panels.forEach(function(p,idx){
+    p.addEventListener('click',function(e){
+      if(e.target.closest('.closebtn')){
+        // collapse -> open the next panel so one is always expanded
+        open(panels[(idx+1)%panels.length]);return;
+      }
+      if(!p.classList.contains('open'))open(p);
+    });
+    p.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();open(p)}
+      if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();panels[(idx+1)%panels.length].focus()}
+      if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();panels[(idx-1+panels.length)%panels.length].focus()}
+    });
+  });
+})();
+
+document.querySelectorAll('[data-goto]').forEach(function(a){
+  a.addEventListener('click',function(e){e.preventDefault();
+    document.querySelector('.pager button[data-p="'+a.dataset.goto+'"]').click()});
+});
+
+// ── page switcher (preview only) ────────────────────────────────────
+document.querySelectorAll('.pager button').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.pager button').forEach(function(x){x.classList.remove('on')});
+    document.querySelectorAll('.page').forEach(function(x){x.classList.remove('show')});
+    b.classList.add('on');
+    document.getElementById(b.dataset.p).classList.add('show');
+    window.scrollTo(0,0);
+  });
+});
+</script>
+</body>
+</html>

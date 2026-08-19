@@ -1,0 +1,392 @@
+---
+import { url } from '../lib/paths';
+
+const EXPAND_ICON = '<path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>';
+const COLLAPSE_ICON = '<path d="M4 14h6v6M20 10h-6V4M10 14l-7 7M14 10l7-7"/>';
+
+const panels = [
+	{
+		key: 'dl',
+		open: true,
+		label: 'Digital Lending Platform',
+		heading: 'Lend digitally end to end, from application to repayment.',
+		body: "Higala helps you digitize the loan lifecycle — from origination, underwriting, servicing, to real-time collections over InstaPay. Higala's digital lending sits right alongside your existing core banking system. Keep your core. Skip the migration.",
+		cta: { label: 'Explore the platform', href: url('/digital-lending') },
+		list: [
+			'<b>Collect</b> — repayments settle in real time and post themselves. No T+1 batch file.',
+			'<b>Originate</b> — digital application, electronic KYC, and approval workflows you configure.',
+			'<b>Score</b> — underwriting rules you control, informed by your own repayment data.',
+			'<b>No upfront CapEx</b> — we earn when you earn, taking only a share of the interest you collect.',
+		],
+	},
+	{
+		key: 'pb',
+		open: false,
+		label: 'Platform Bank',
+		heading: 'Modern banking services without building from scratch.',
+		body: 'Higala helps microfinance institutions, rural banks, and thrift banks deliver modern, connected, and customer-centric services without the high cost or complexity of building from scratch. Integrate digital payments, loans, deposits, and partner services into one secure platform.',
+		cta: { label: 'Know More', href: url('/#demo') },
+		list: [
+			'<b>Digital payments</b> — send and receive over national real-time rails.',
+			'<b>Deposits and loans</b> — core banking services delivered as a platform.',
+			'<b>Partner services</b> — connect third-party products without separate builds.',
+			'<b>One console</b> — operations, reconciliation, and reporting in a single place.',
+			'<b>Built for supervised institutions</b> — controls and audit trails your examiners expect.',
+		],
+	},
+	{
+		key: 'iip',
+		open: false,
+		label: 'Inclusive Instant Payments',
+		heading: 'Low-cost instant payment systems, built on Mojaloop.',
+		body: 'As a trusted payments innovation partner, Higala helps regulators, central banks, and payment operators build low-cost, inclusive Instant Payment Systems (IIPS) and Real-Time Payment (RTP) solutions on Mojaloop. Our team brings deep technical expertise and regulatory insight to architect and deliver these systems.',
+		cta: { label: 'Get in touch', href: url('/#demo') },
+		list: [
+			'<b>Hub business operations</b> and scheme design.',
+			'<b>IPS consulting services</b> for regulators and operators.',
+			'<b>Full technical deployment</b> of instant payment systems.',
+			'<b>Open standards</b> — Mojaloop and ISO 20022, not proprietary lock-in.',
+		],
+	},
+];
+---
+
+<section id="solutions">
+	<div class="wrap">
+		<div class="ov">Our Solutions</div>
+		<h2 style="max-width:34ch">
+			Explore our solutions and choose where to go next across Lending, Inclusive Instant
+			Payments, and Platform Banking.
+		</h2>
+
+		<div class="panels" id="panels">
+			{
+				panels.map((p) => (
+					<article class="panel" class:list={{ open: p.open }} data-k={p.key} tabindex="0" aria-expanded={p.open ? 'true' : 'false'}>
+						<div class="bgwash" />
+						<div class="mesh" />
+						<div class="rail">
+							<button class="maxbtn" aria-label={`Expand ${p.label}`}>
+								<svg viewBox="0 0 24 24" set:html={EXPAND_ICON} />
+							</button>
+							<div class="vt">{p.label}</div>
+						</div>
+						<button class="maxbtn closebtn" aria-label="Collapse">
+							<svg viewBox="0 0 24 24" set:html={COLLAPSE_ICON} />
+						</button>
+						<div class="pbody">
+							<div>
+								<div class="tagline">{p.label}</div>
+								<h3>{p.heading}</h3>
+								<p>{p.body}</p>
+								<a class="btn btn-white" href={p.cta.href}>{p.cta.label}</a>
+							</div>
+							<ul class="plist">
+								{p.list.map((item) => <li set:html={item} />)}
+							</ul>
+						</div>
+					</article>
+				))
+			}
+		</div>
+		<div class="note">
+			<b>Interaction:</b> click a collapsed rail — or its expand button — to open that segment. One
+			panel is open at a time; Digital Lending is the default. Arrow keys move between panels,
+			Enter or Space opens the focused one.
+		</div>
+	</div>
+</section>
+
+<style>
+	.panels {
+		display: flex;
+		gap: 14px;
+		margin-top: 48px;
+	}
+	.panel {
+		position: relative;
+		border-radius: var(--radius-hero);
+		overflow: hidden;
+		min-height: 560px;
+		background: var(--surface-2);
+		border: 1px solid var(--line);
+		cursor: pointer;
+		flex: 0 0 96px;
+		transition: flex-basis var(--dur-slow) var(--ease), flex-grow var(--dur-slow) var(--ease),
+			box-shadow var(--dur-base) ease;
+	}
+	.panel:hover {
+		box-shadow: var(--shadow-md);
+	}
+	.panel.open {
+		flex: 1 1 auto;
+		cursor: default;
+		box-shadow: var(--shadow-lg);
+	}
+	.panel .bgwash {
+		position: absolute;
+		inset: 0;
+		opacity: 0.96;
+	}
+	.panel[data-k='pb'] .bgwash {
+		background: linear-gradient(158deg, #00615d 0%, #00847e 62%, #00a8a0 100%);
+	}
+	.panel[data-k='iip'] .bgwash {
+		background: linear-gradient(158deg, #0b3b3a 0%, #00847e 55%, #5ccbc5 130%);
+	}
+	.panel[data-k='dl'] .bgwash {
+		background: var(--grad-brand-deep);
+	}
+	.panel .mesh {
+		position: absolute;
+		inset: 0;
+		opacity: 0.5;
+		background: radial-gradient(90% 70% at 90% 0%, rgba(255, 255, 255, 0.22), transparent 55%),
+			repeating-linear-gradient(122deg, rgba(255, 255, 255, 0.07) 0 1px, transparent 1px 46px);
+	}
+
+	.rail {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 22px;
+		padding: 22px 0;
+		transition: opacity var(--dur-base) var(--ease);
+	}
+	.rail .vt {
+		writing-mode: vertical-rl;
+		transform: rotate(180deg);
+		font: 600 19px var(--font-display);
+		color: #fff;
+		letter-spacing: -0.01em;
+		white-space: nowrap;
+		flex: 1 1 auto;
+		min-height: 0;
+		overflow: hidden;
+	}
+	.maxbtn {
+		width: 42px;
+		height: 42px;
+		flex: 0 0 42px;
+		border-radius: var(--radius-pill);
+		border: 0;
+		background: rgba(255, 255, 255, 0.18);
+		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.36);
+		color: #fff;
+		cursor: pointer;
+		display: grid;
+		place-items: center;
+		transition: background var(--dur-fast) linear, transform var(--dur-base) ease;
+	}
+	.maxbtn:hover {
+		background: rgba(255, 255, 255, 0.32);
+	}
+	.maxbtn:active {
+		transform: scale(0.94);
+	}
+	.maxbtn svg {
+		width: 18px;
+		height: 18px;
+		stroke: #fff;
+		stroke-width: 2;
+		fill: none;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+	.panel.open .rail {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.pbody {
+		position: absolute;
+		inset: 0;
+		opacity: 0;
+		pointer-events: none;
+		padding: 48px 44px;
+		overflow: auto;
+		display: grid;
+		grid-template-columns: 1.05fr 0.95fr;
+		gap: 44px;
+		align-content: center;
+		align-items: center;
+		transition: opacity var(--dur-slow) var(--ease);
+		min-width: 0;
+	}
+	.panel.open .pbody {
+		opacity: 1;
+		pointer-events: auto;
+		transition-delay: 120ms;
+	}
+	.pbody .tagline {
+		font: 600 12px var(--font-body);
+		text-transform: uppercase;
+		letter-spacing: 0.14em;
+		color: var(--higala-green);
+		margin-bottom: 16px;
+	}
+	.pbody h3 {
+		color: #fff;
+		font-size: clamp(22px, 2.3vw, 32px);
+		line-height: 1.14;
+		letter-spacing: -0.02em;
+		max-width: 15ch;
+	}
+	.pbody p {
+		color: rgba(255, 255, 255, 0.82);
+		font-size: 16px;
+		margin-top: 16px;
+		max-width: 46ch;
+	}
+	.pbody .btn {
+		margin-top: 28px;
+	}
+	.plist {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+	.plist li {
+		position: relative;
+		padding: 13px 0 13px 30px;
+		color: #fff;
+		font-size: 15.5px;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+	}
+	.plist li:before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 19px;
+		width: 14px;
+		height: 14px;
+		border-radius: 50%;
+		background: rgba(255, 255, 255, 0.2);
+		box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.55);
+	}
+	.plist li:after {
+		content: '';
+		position: absolute;
+		left: 4.5px;
+		top: 23.5px;
+		width: 5px;
+		height: 5px;
+		border-radius: 50%;
+		background: var(--higala-green);
+	}
+	.plist li :global(b) {
+		font-weight: 600;
+	}
+	.closebtn {
+		position: absolute;
+		top: 22px;
+		right: 22px;
+		z-index: 3;
+	}
+	.panel:not(.open) .closebtn {
+		display: none;
+	}
+
+	@media (max-width: 760px) {
+		.panels {
+			flex-direction: column;
+			gap: 12px;
+			margin-top: 32px;
+		}
+		.panel {
+			flex: 0 0 auto;
+			min-height: 0;
+			border-radius: var(--radius-media);
+		}
+		.panel .pbody {
+			position: static;
+			inset: auto;
+			overflow: visible;
+			padding: 24px;
+			grid-template-columns: 1fr;
+			gap: 24px;
+		}
+		.panel:not(.open) .pbody {
+			display: none;
+		}
+		.rail {
+			position: static;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			padding: 18px 20px;
+			gap: 14px;
+		}
+		.rail .vt {
+			writing-mode: horizontal-tb;
+			transform: none;
+			font-size: 17px;
+			white-space: normal;
+			flex: 1 1 auto;
+			overflow: visible;
+		}
+		.panel.open .rail {
+			display: none;
+		}
+		.closebtn {
+			top: 16px;
+			right: 16px;
+			width: 36px;
+			height: 36px;
+			flex-basis: 36px;
+		}
+		.plist li {
+			padding: 11px 0 11px 28px;
+			font-size: 15px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.panel,
+		.pbody {
+			transition: none;
+		}
+	}
+</style>
+
+<script>
+	const root = document.getElementById('panels');
+	if (root) {
+		const panels = Array.from(root.querySelectorAll<HTMLElement>('.panel'));
+
+		function open(target: HTMLElement) {
+			panels.forEach((p) => {
+				const on = p === target;
+				p.classList.toggle('open', on);
+				p.setAttribute('aria-expanded', on ? 'true' : 'false');
+			});
+		}
+
+		panels.forEach((p, idx) => {
+			p.addEventListener('click', (e) => {
+				if ((e.target as HTMLElement).closest('.closebtn')) {
+					// collapse -> open the next panel so one is always expanded
+					open(panels[(idx + 1) % panels.length]);
+					return;
+				}
+				if (!p.classList.contains('open')) open(p);
+			});
+			p.addEventListener('keydown', (e) => {
+				if (e.key === 'Enter' || e.key === ' ') {
+					e.preventDefault();
+					open(p);
+				}
+				if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+					e.preventDefault();
+					panels[(idx + 1) % panels.length].focus();
+				}
+				if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+					e.preventDefault();
+					panels[(idx - 1 + panels.length) % panels.length].focus();
+				}
+			});
+		});
+	}
+</script>
