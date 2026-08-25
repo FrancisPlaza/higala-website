@@ -96,11 +96,18 @@ th{font:600 12px var(--font-body);text-transform:uppercase;letter-spacing:.14em;
 td:first-child{color:var(--ink-500)}
 td:last-child{color:var(--ink);font-weight:500;background:var(--higala-teal-050)}
 
-/* stats */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:44px}
-.stat b{display:block;font:700 clamp(30px,3.4vw,40px)/1.1 var(--font-display);color:var(--ink);letter-spacing:-.02em;line-height:1.1}
-.stat span{font-size:14px;color:var(--ink-500)}
-.stat{border-top:2px solid var(--higala-teal);padding-top:16px}
+/* partner quote */
+.quote{margin-top:40px;max-width:880px;position:relative}
+.qmark{font:700 96px/1 var(--font-display);color:var(--higala-teal-100);
+  margin-bottom:-38px;user-select:none}
+.quote blockquote{margin:0;font:500 clamp(19px,2.1vw,26px)/1.45 var(--font-display);
+  letter-spacing:-.015em;color:var(--ink)}
+.byline{display:flex;align-items:center;gap:18px;margin-top:32px}
+.byline .avatar{flex:0 0 auto;width:88px;height:88px;border-radius:50%;overflow:hidden;
+  background:var(--surface-2);box-shadow:inset 0 0 0 1px var(--line)}
+.byline .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.byline b{display:block;font:600 18px var(--font-display);color:var(--ink)}
+.byline span{font-size:15px;color:var(--ink-500)}
 
 /* gradient CTA panel */
 .ctapanel{background:var(--grad-brand);border-radius:var(--radius-hero);padding:clamp(28px,4vw,64px);
@@ -131,14 +138,13 @@ section.tint .note{background:#fff}
 /* ── tablet / small laptop ───────────────────────────────────────── */
 @media(max-width:1080px){
   .g4{grid-template-columns:repeat(2,1fr)}
-  .stats{grid-template-columns:repeat(2,1fr)}
   .fgrid{grid-template-columns:1fr 1fr}
   .hd nav{display:none}
 }
 
 /* ── mobile ──────────────────────────────────────────────────────── */
 @media(max-width:760px){
-  .g2,.g3,.g4,.stats,.fgrid{grid-template-columns:1fr}
+  .g2,.g3,.g4,.fgrid{grid-template-columns:1fr}
   .card{padding:24px}
   .cta-row{gap:16px}
   .cta-row .btn{width:100%;justify-content:center}
