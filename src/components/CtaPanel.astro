@@ -1,5 +1,6 @@
 ---
 import ArrowRight from './icons/ArrowRight.astro';
+import { demoSchedulingUrl } from '../lib/paths';
 
 interface Props {
 	id?: string;
@@ -15,7 +16,7 @@ const {
 	heading,
 	body,
 	primaryLabel = 'Book a Demo',
-	primaryHref = '#',
+	primaryHref = demoSchedulingUrl,
 	secondaryLabel = 'Or send us a DM',
 	secondaryHref = '#',
 } = Astro.props;
@@ -27,7 +28,7 @@ const {
 			<h2>{heading}</h2>
 			<p>{body}</p>
 			<div class="cta-row" style="margin-top:36px">
-				<a class="btn btn-white" href={primaryHref}>{primaryLabel}</a>
+				<a class="btn btn-white" href={primaryHref} target="_blank" rel="noopener noreferrer">{primaryLabel}</a>
 				<a class="tlink" style="color:#fff" href={secondaryHref}>
 					{secondaryLabel}
 					<ArrowRight />

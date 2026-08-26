@@ -10,7 +10,7 @@ import BenefitMarquee from '../components/BenefitMarquee.astro';
 import PartnerQuote from '../components/PartnerQuote.astro';
 import CtaPanel from '../components/CtaPanel.astro';
 import ArrowRight from '../components/icons/ArrowRight.astro';
-import { url } from '../lib/paths';
+import { url, demoSchedulingUrl } from '../lib/paths';
 ---
 
 <Layout
@@ -25,7 +25,7 @@ import { url } from '../lib/paths';
 			cooperatives — designed to work individually or together.
 		</Fragment>
 		<Fragment slot="cta">
-			<a class="btn btn-white" href={url('/#demo')}>Book a Demo</a>
+			<a class="btn btn-white" href={demoSchedulingUrl} target="_blank" rel="noopener noreferrer">Book a Demo</a>
 			<a class="tlink" href={url('/#solutions')}>
 				Explore our solutions
 				<ArrowRight />
@@ -56,7 +56,6 @@ import { url } from '../lib/paths';
 		id="demo"
 		heading="See it run on your own numbers."
 		body="Bring one week of loan applications to a 30-minute working session. We'll run your actual loan products and repayment data through our platform. You'll see exactly how funds settle in real time and what it takes to go live."
-		primaryHref="#"
 		secondaryHref="#"
 	/>
 </Layout>
