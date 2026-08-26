@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
 import CtaPanel from '../components/CtaPanel.astro';
+import { demoSchedulingUrl } from '../lib/paths';
 
 const outcomes = [
 	{
@@ -67,7 +68,7 @@ const sequencing = [
 			upfront CapEx.
 		</Fragment>
 		<Fragment slot="cta">
-			<a class="btn btn-white" href="#">Book a Demo</a>
+			<a class="btn btn-white" href={demoSchedulingUrl} target="_blank" rel="noopener noreferrer">Book a Demo</a>
 			<a class="tlink" href="#collections">
 				See how collections settle in real time
 				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -240,7 +241,6 @@ const sequencing = [
 	<CtaPanel
 		heading="Bring one week of new loan applications. We'll show you how to make repayments effortless."
 		body="A 30-minute working session on your own loan product and your own repayment data. You'll see exactly what settles in real time, what reconciles itself, and what it would take to go live. No CapEx, no core migration, no commitment."
-		primaryHref="#"
 		secondaryHref="#"
 	/>
 </Layout>

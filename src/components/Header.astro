@@ -1,5 +1,5 @@
 ---
-import { base, url } from '../lib/paths';
+import { base, url, demoSchedulingUrl } from '../lib/paths';
 
 const { pathname } = Astro.url;
 const path = pathname.startsWith(base) ? pathname.slice(base.length) || '/' : pathname;
@@ -17,7 +17,7 @@ const isDigitalLending = path === '/digital-lending' || path === '/digital-lendi
 			<a href={url('/#news')}>News</a>
 		</nav>
 		<div class="right">
-			<a class="btn btn-grad" href={url('/#demo')}>Book a Demo</a>
+			<a class="btn btn-grad" href={demoSchedulingUrl} target="_blank" rel="noopener noreferrer">Book a Demo</a>
 		</div>
 	</div>
 </header>
