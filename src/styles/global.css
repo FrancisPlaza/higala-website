@@ -125,6 +125,7 @@ footer a{color:rgba(255,255,255,.68);display:block;padding:5px 0}
 footer a:hover{color:var(--higala-green);text-decoration:none}
 .fbot{margin-top:48px;padding-top:24px;border-top:1px solid rgba(255,255,255,.14);
   display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--ink-400)}
+.fbot a{display:inline;padding:0}
 
 /* placeholder chip + inline notes (used across hero/panels/proof/ctapanel contexts) */
 .ph{background:rgba(229,161,0,.14);color:#8A5A17;border:1px solid rgba(229,161,0,.36);
